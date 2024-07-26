@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch JSON Data</title>
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+         @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Teko:wght@300..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+        body {
+            background-color: cadetblue;
+            font-weight: lighter;
+            font-family: 'ubuntu';
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #data-container div {
+            background-color: #2c3e50;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        h2 {
+            color:aquamarine;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #ecf0f1;
+            font-family: 'teko';
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 20px;
+            
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="fetchData()">Click to Fetch Data...</button>
+    <div id="data-container"></div>
+
+    <script>
+        function fetchData() {
+            fetch('sahidInfo.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('data-container');
+                    container.innerHTML = '';
+
+                    data.forEach(person => {
+                        const personDiv = document.createElement('div');
+                        personDiv.innerHTML = `
+                            <h2>${person.en.name} - ${person.bn.name}</h2>
+                            <hr>
+                            <p><span class="label">Born Address:</span> ${person.en.bornAddress}</p>
+                            <p><span class="label">Education:</span> ${person.en.education}</p>
+                            <p><span class="label">Age:</span> ${person.age}</p>
+                            <p><span class="label">Died Date:</span> ${person.diedDate}</p>
+                            <p><span class="label">Profession:</span> ${person.profession}</p>
+                            <p><span class="label">Early Life:</span> ${person.en.earlyLife}</p>
+                            <p><span class="label">How to Death:</span> ${person.en.howToDeath}</p>
+                        `;
+                        container.appendChild(personDiv);
+                    });
+                })
+                
+        }
+    </script>
+</body>
+</html>
